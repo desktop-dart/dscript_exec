@@ -5,7 +5,7 @@ abstract class RunnerMixin {
 
   Future<String> runGetOutput({FutureOr onFinish(String output)}) async {
     final Process process = await run();
-    final String ret = await process.stdout.transform(UTF8.decoder).join();
+    final String ret = await process.stdout.transform(utf8.decoder).join();
     if (onFinish != null) await onFinish(ret);
     return ret;
   }
@@ -28,7 +28,7 @@ abstract class RunnerMixin {
   Future<Stream<String>> runGetStringStream(
       {FutureOr onFinish(Stream<String> output)}) async {
     final Process process = await run();
-    final Stream<String> ret = process.stdout.transform(UTF8.decoder);
+    final Stream<String> ret = process.stdout.transform(utf8.decoder);
     if (onFinish != null) await onFinish(ret);
     return ret;
   }
@@ -37,7 +37,7 @@ abstract class RunnerMixin {
       {FutureOr onFinish(List<String> output)}) async {
     final Process process = await run();
     final List<String> ret =
-        await process.stdout.transform(UTF8.decoder).toList();
+        await process.stdout.transform(utf8.decoder).toList();
     if (onFinish != null) await onFinish(ret);
     return ret;
   }
@@ -46,7 +46,7 @@ abstract class RunnerMixin {
       {FutureOr onFinish(List<String> output)}) async {
     final Process process = await run();
     final List<String> ret = await process.stdout
-        .transform(UTF8.decoder)
+        .transform(utf8.decoder)
         .transform(_splitter)
         .toList();
     if (onFinish != null) await onFinish(ret);

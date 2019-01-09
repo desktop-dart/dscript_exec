@@ -17,7 +17,7 @@ class ProcessWithProxyStdout implements Process {
 
   int get pid => _internal.pid;
 
-  bool kill([ProcessSignal signal = ProcessSignal.SIGTERM]) =>
+  bool kill([ProcessSignal signal = ProcessSignal.sigterm]) =>
       _internal.kill(signal);
 }
 
@@ -58,8 +58,8 @@ class InlineStringPipe implements Op {
   Future<ProcessWithProxyStdout> runWith(Process other) async =>
       new ProcessWithProxyStdout(
           other,
-          (await cmd(other.stdout.transform(UTF8.decoder)))
-              .transform(UTF8.encoder));
+          (await cmd(other.stdout.transform(utf8.decoder)))
+              .transform(utf8.encoder));
 }
 
 class InlineLinePipe implements Op {
@@ -70,9 +70,9 @@ class InlineLinePipe implements Op {
   Future<ProcessWithProxyStdout> runWith(Process other) async =>
       new ProcessWithProxyStdout(
           other,
-          (await cmd(other.stdout.transform(UTF8.decoder).transform(_splitter)))
+          (await cmd(other.stdout.transform(utf8.decoder).transform(_splitter)))
               .map((s) => s + '\r\n')
-              .transform(UTF8.encoder));
+              .transform(utf8.encoder));
 }
 
 class InputRedirect implements Op {
@@ -128,7 +128,7 @@ class OutputRedirect implements Op {
       });
     } else if (dest is StringBuffer) {
       StringBuffer sb = dest;
-      other.stdout.listen((List<int> data) => sb.write(UTF8.decode(data)),
+      other.stdout.listen((List<int> data) => sb.write(utf8.decode(data)),
           cancelOnError: true);
     } else if (dest is List<int>) {
       List<int> list = dest;
@@ -139,7 +139,7 @@ class OutputRedirect implements Op {
       other.stdout.pipe(stream);
     } else if (dest is StreamConsumer<String>) {
       StreamConsumer<String> stream = dest;
-      other.stdout.transform(UTF8.decoder).pipe(stream);
+      other.stdout.transform(utf8.decoder).pipe(stream);
     }
     return other;
   }
