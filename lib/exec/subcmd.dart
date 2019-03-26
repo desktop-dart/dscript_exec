@@ -47,7 +47,7 @@ class InlinePipe implements Op {
   InlinePipe(this.cmd);
 
   Future<ProcessWithProxyStdout> runWith(Process other) async =>
-      new ProcessWithProxyStdout(other, await cmd(other.stdout));
+      ProcessWithProxyStdout(other, await cmd(other.stdout));
 }
 
 class InlineStringPipe implements Op {
@@ -56,7 +56,7 @@ class InlineStringPipe implements Op {
   InlineStringPipe(this.cmd);
 
   Future<ProcessWithProxyStdout> runWith(Process other) async =>
-      new ProcessWithProxyStdout(
+      ProcessWithProxyStdout(
           other,
           (await cmd(other.stdout.transform(utf8.decoder)))
               .transform(utf8.encoder));
@@ -68,7 +68,7 @@ class InlineLinePipe implements Op {
   InlineLinePipe(this.cmd);
 
   Future<ProcessWithProxyStdout> runWith(Process other) async =>
-      new ProcessWithProxyStdout(
+      ProcessWithProxyStdout(
           other,
           (await cmd(other.stdout.transform(utf8.decoder).transform(_splitter)))
               .map((s) => s + '\r\n')
@@ -86,7 +86,7 @@ class InputRedirect implements Op {
       if (dest is File) {
         file = dest;
       } else if (dest is Uri) {
-        file = new File((dest as Uri).path);
+        file = File((dest as Uri).path);
       }
       other.stdin.addStream(file.openRead());
     } else if (dest is List<int>) {
@@ -115,7 +115,7 @@ class OutputRedirect implements Op {
       if (dest is File) {
         file = dest;
       } else if (dest is Uri) {
-        file = new File((dest as Uri).path);
+        file = File((dest as Uri).path);
       }
       final IOSink sink = await file.openWrite();
       other.stdout.listen((List<int> data) => sink.add(data),

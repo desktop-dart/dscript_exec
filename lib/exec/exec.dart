@@ -14,7 +14,7 @@ part 'subcmd.dart';
 /// Example:
 ///     await exec('rm', ['example/dest.csv']).run();
 Command exec(String executable, List<String> args) =>
-    new CommandImpl(executable, args);
+    CommandImpl(executable, args);
 
 abstract class Command {
   /// Executable of the command

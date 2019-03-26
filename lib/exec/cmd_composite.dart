@@ -15,39 +15,39 @@ class CompositeCmd extends Object with RunnerMixin implements Command {
     if (cmd is Command) return pipe(cmd);
     if (cmd is InlineFunc) return pipeInline(cmd);
     if (cmd is InlineStringFunc) return pipeInlineString(cmd);
-    throw new UnsupportedError(
+    throw UnsupportedError(
         'Pipe operation not supported for provided command!');
   }
 
   Command operator >(
       /* File | Uri | StreamConsumer<List<int>> | StreamConsumer<String> | StringBuffer | List<int> */ file) {
-    ops.add(new OutputRedirect(file));
+    ops.add(OutputRedirect(file));
     return this;
   }
 
   Command operator <(
       /* File | Uri | List<int> | Stream<List<int>> | String */ file) {
-    ops.add(new InputRedirect(file));
+    ops.add(InputRedirect(file));
     return this;
   }
 
   Command pipe(Command cmd) {
-    ops.add(new Pipe(cmd));
+    ops.add(Pipe(cmd));
     return this;
   }
 
   Command pipeInline(InlineFunc cmd) {
-    ops.add(new InlinePipe(cmd));
+    ops.add(InlinePipe(cmd));
     return this;
   }
 
   Command pipeInlineString(InlineStringFunc cmd) {
-    ops.add(new InlineStringPipe(cmd));
+    ops.add(InlineStringPipe(cmd));
     return this;
   }
 
   Command pipeInlineLine(InlineStringFunc cmd) {
-    ops.add(new InlineLinePipe(cmd));
+    ops.add(InlineLinePipe(cmd));
     return this;
   }
 

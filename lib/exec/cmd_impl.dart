@@ -11,28 +11,27 @@ class CommandImpl extends Object with RunnerMixin implements Command {
     if (cmd is Command) return pipe(cmd);
     if (cmd is InlineFunc) return pipeInline(cmd);
     if (cmd is InlineStringFunc) return pipeInlineString(cmd);
-    throw new UnsupportedError(
+    throw UnsupportedError(
         'Pipe operation not supported for provided command!');
   }
 
   Command operator >(
           /* File | Uri | StreamConsumer<List<int>> | StreamConsumer<String> | StringBuffer | List<int> */ src) =>
-      new CompositeCmd(this, [new OutputRedirect(src)]);
+      CompositeCmd(this, [OutputRedirect(src)]);
 
   Command operator <(
           /* File | Uri | List<int> | Stream<List<int>> | String */ dest) =>
-      new CompositeCmd(this, [new InputRedirect(dest)]);
+      CompositeCmd(this, [InputRedirect(dest)]);
 
-  Command pipe(Command cmd) => new CompositeCmd(this, [new Pipe(cmd)]);
+  Command pipe(Command cmd) => CompositeCmd(this, [Pipe(cmd)]);
 
-  Command pipeInline(InlineFunc cmd) =>
-      new CompositeCmd(this, [new InlinePipe(cmd)]);
+  Command pipeInline(InlineFunc cmd) => CompositeCmd(this, [InlinePipe(cmd)]);
 
   Command pipeInlineString(InlineStringFunc cmd) =>
-      new CompositeCmd(this, [new InlineStringPipe(cmd)]);
+      CompositeCmd(this, [InlineStringPipe(cmd)]);
 
   Command pipeInlineLine(InlineStringFunc cmd) =>
-      new CompositeCmd(this, [new InlineLinePipe(cmd)]);
+      CompositeCmd(this, [InlineLinePipe(cmd)]);
 
   Future<Process> run({FutureOr onFinish(Process process)}) async {
     final Process process = await Process.start(executable, args);
