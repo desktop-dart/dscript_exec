@@ -76,7 +76,7 @@ class InlineLinePipe implements Op {
 }
 
 class InputRedirect implements Op {
-  final dest;
+  final dynamic /* File | Uri | List<int> | Stream<List<int>> | String */ dest;
 
   InputRedirect(this.dest);
 

@@ -13,7 +13,7 @@ part 'subcmd.dart';
 ///
 /// Example:
 ///     await exec('rm', ['example/dest.csv']).run();
-Command exec(String executable, List<String> args) =>
+Command exec(String executable, [List<String> args = const []]) =>
     CommandImpl(executable, args);
 
 abstract class Command {
@@ -101,28 +101,22 @@ abstract class Command {
 
   /// Runs the command pipeline and returns the [Process] instance of final
   /// process
-  Future<Process> run({FutureOr onFinish(Process process)});
+  Future<Process> run();
 
   /// Runs the command pipeline and returns the string output of final process
-  Future<String> runGetOutput({FutureOr onFinish(String output)});
+  Future<String> stdout();
 
-  /// Runs the command pipeline and returns the byte output of final process
-  Future<Stream<List<int>>> runGetStdout(
-      {FutureOr onFinish(Stream<List<int>> output)});
+  Future<int> exitCode();
+}
 
-  /// Runs the command pipeline and returns the byte output of final process
-  Future<List<List<int>>> runGetByteList(
-      {FutureOr onFinish(List<List<int>> output)});
+class Result {
+  final int status;
 
-  /// Runs the command pipeline and returns the string output of final process
-  Future<Stream<String>> runGetStringStream(
-      {FutureOr onFinish(Stream<String> output)});
+  final String stdin;
 
-  /// Runs the command pipeline and returns the string output of final process
-  Future<List<String>> runGetStringList(
-      {FutureOr onFinish(List<String> output)});
+  final String stdout;
 
-  /// Runs the command pipeline and returns the string output of final process as
-  /// lines
-  Future<List<String>> runGetLines({FutureOr onFinish(List<String> output)});
+  final int pid;
+
+  Result(this.status, this.stdin, this.stdout, this.pid);
 }

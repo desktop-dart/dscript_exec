@@ -7,5 +7,6 @@ main() async {
       .pipeInlineString((Stream<String> stream) => stream
           .transform(const LineSplitter())
           .map((s) => s.split(',')[1] + '\r\n'))
-      .runGetOutput(onFinish: print);
+      .stdout()
+      .then(print);
 }

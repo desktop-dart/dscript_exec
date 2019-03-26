@@ -5,7 +5,7 @@ class CommandImpl extends Object with RunnerMixin implements Command {
 
   final List<String> args;
 
-  CommandImpl(this.executable, this.args);
+  CommandImpl(this.executable, [this.args = const []]);
 
   Command operator |(/* Command | InlineFunc | InlineStringFunc */ cmd) {
     if (cmd is Command) return pipe(cmd);
@@ -33,9 +33,8 @@ class CommandImpl extends Object with RunnerMixin implements Command {
   Command pipeInlineLine(InlineStringFunc cmd) =>
       CompositeCmd(this, [InlineLinePipe(cmd)]);
 
-  Future<Process> run({FutureOr onFinish(Process process)}) async {
+  Future<Process> run() async {
     final Process process = await Process.start(executable, args);
-    if (onFinish != null) await onFinish(process);
     return process;
   }
 }
