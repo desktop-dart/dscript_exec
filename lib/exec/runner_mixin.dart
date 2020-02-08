@@ -4,13 +4,13 @@ abstract class RunnerMixin {
   Future<Process> run();
 
   Future<String> stdout() async {
-    final Process process = await run();
-    final String ret = await process.stdout.transform(utf8.decoder).join();
+    final process = await run();
+    final ret = await process.stdout.transform(utf8.decoder).join();
     return ret;
   }
 
   Future<int> exitCode() async {
-    final Process process = await run();
+    final process = await run();
     return process.exitCode;
   }
 
@@ -36,4 +36,4 @@ abstract class RunnerMixin {
   */
 }
 
-const LineSplitter _splitter = const LineSplitter();
+const LineSplitter _splitter = LineSplitter();

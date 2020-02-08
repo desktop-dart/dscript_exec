@@ -2,6 +2,7 @@
 .packages
 .pub/
 build/
+.dart_tool/
 # Remove the following pattern if you wish to check in your lock file
 pubspec.lock
 
@@ -10,3 +11,6 @@ doc/api/
 
 .idea
 *.iml
+
+# Created byb example/output_redirection.dart
+example/dest.csv
