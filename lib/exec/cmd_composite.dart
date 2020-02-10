@@ -62,8 +62,8 @@ class CompositeCmd extends Object with RunnerMixin implements Command {
 
   @override
   Future<Process> run({FutureOr Function(Process process) onFinish}) async {
-    var last = await first.run();
-    for (var sc in ops) {
+    Process last = await first.run();
+    for (Op sc in ops) {
       last = await sc.runWith(last);
     }
     if (onFinish != null) await onFinish(last);

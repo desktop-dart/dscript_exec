@@ -44,7 +44,7 @@ class CommandImpl extends Object with RunnerMixin implements Command {
 
   @override
   Future<Process> run() async {
-    final process = await Process.start(executable, args);
+    final Process process = await Process.start(executable, args);
     return process;
   }
 }

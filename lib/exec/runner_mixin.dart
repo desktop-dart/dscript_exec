@@ -4,13 +4,13 @@ abstract class RunnerMixin {
   Future<Process> run();
 
   Future<String> stdout() async {
-    final process = await run();
-    final ret = await process.stdout.transform(utf8.decoder).join();
+    final Process process = await run();
+    final String ret = await process.stdout.transform(utf8.decoder).join();
     return ret;
   }
 
   Future<int> exitCode() async {
-    final process = await run();
+    final Process process = await run();
     return process.exitCode;
   }
 

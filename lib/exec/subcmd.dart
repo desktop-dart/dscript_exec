@@ -38,7 +38,7 @@ class Pipe implements Op {
 
   @override
   Future<Process> runWith(Process other) async {
-    final newProcess = await cmd.run();
+    final Process newProcess = await cmd.run();
     await other.stdout.pipe(newProcess.stdin);
     return newProcess;
   }
@@ -131,7 +131,7 @@ class OutputRedirect implements Op {
       } else if (dest is Uri) {
         file = File((dest as Uri).path);
       }
-      final sink = await file.openWrite();
+      final IOSink sink = await file.openWrite();
       other.stdout.listen((List<int> data) => sink.add(data),
           cancelOnError: true, onError: (_) async {
         await sink.flush();
