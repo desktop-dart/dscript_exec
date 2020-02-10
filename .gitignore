@@ -12,5 +12,5 @@ doc/api/
 .idea
 *.iml
 
-# Created byb example/output_redirection.dart
+# Created by example/output_redirection.dart
 example/dest.csv
