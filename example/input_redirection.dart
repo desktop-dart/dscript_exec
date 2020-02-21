@@ -3,8 +3,8 @@ library example.exec;
 
 import 'package:dscript_exec/dscript_exec.dart';
 
-main() async {
-  await (exec('cut', ['-d', "','", '-f', '1']) <
+Future<void> main() async {
+  await (exec('cut', ['-d', ',', '-f', '1']) <
           '''
 John,Smith,34,London
 Arthur,Evans,21,Newport

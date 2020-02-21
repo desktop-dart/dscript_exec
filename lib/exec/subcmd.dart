@@ -3,20 +3,26 @@ part of dscript.exec;
 class ProcessWithProxyStdout implements Process {
   final Process _internal;
 
-  Stream<List<int>> _stdout;
+  final Stream<List<int>> _stdout;
 
   ProcessWithProxyStdout(this._internal, this._stdout);
 
+  @override
   Future<int> get exitCode => _internal.exitCode;
 
+  @override
   Stream<List<int>> get stdout => _stdout;
 
+  @override
   Stream<List<int>> get stderr => _internal.stderr;
 
+  @override
   IOSink get stdin => _internal.stdin;
 
+  @override
   int get pid => _internal.pid;
 
+  @override
   bool kill([ProcessSignal signal = ProcessSignal.sigterm]) =>
       _internal.kill(signal);
 }
@@ -30,6 +36,7 @@ class Pipe implements Op {
 
   Pipe(this.cmd);
 
+  @override
   Future<Process> runWith(Process other) async {
     final Process newProcess = await cmd.run();
     await other.stdout.pipe(newProcess.stdin);
@@ -37,15 +44,18 @@ class Pipe implements Op {
   }
 }
 
-typedef FutureOr<Stream<List<int>>> InlineFunc(Stream<List<int>> stdin);
+typedef InlineFunc = FutureOr<Stream<List<int>>> Function(
+    Stream<List<int>> stdin);
 
-typedef FutureOr<Stream<String>> InlineStringFunc(Stream<String> stdin);
+typedef InlineStringFunc = FutureOr<Stream<String>> Function(
+    Stream<String> stdin);
 
 class InlinePipe implements Op {
   final InlineFunc cmd;
 
   InlinePipe(this.cmd);
 
+  @override
   Future<ProcessWithProxyStdout> runWith(Process other) async =>
       ProcessWithProxyStdout(other, await cmd(other.stdout));
 }
@@ -55,6 +65,7 @@ class InlineStringPipe implements Op {
 
   InlineStringPipe(this.cmd);
 
+  @override
   Future<ProcessWithProxyStdout> runWith(Process other) async =>
       ProcessWithProxyStdout(
           other,
@@ -67,6 +78,7 @@ class InlineLinePipe implements Op {
 
   InlineLinePipe(this.cmd);
 
+  @override
   Future<ProcessWithProxyStdout> runWith(Process other) async =>
       ProcessWithProxyStdout(
           other,
@@ -80,6 +92,7 @@ class InputRedirect implements Op {
 
   InputRedirect(this.dest);
 
+  @override
   Future<Process> runWith(Process other) async {
     if (dest is File || dest is Uri) {
       File file;
@@ -88,13 +101,13 @@ class InputRedirect implements Op {
       } else if (dest is Uri) {
         file = File((dest as Uri).path);
       }
-      other.stdin.addStream(file.openRead());
+      await other.stdin.addStream(file.openRead());
     } else if (dest is List<int>) {
       other.stdin.add(dest);
       await other.stdin.flush();
       await other.stdin.close();
     } else if (dest is Stream<List<int>>) {
-      (dest as Stream<List<int>>).pipe(other.stdin);
+      await (dest as Stream<List<int>>).pipe(other.stdin);
     } else if (dest is String) {
       other.stdin.write(dest);
       await other.stdin.flush();
@@ -109,6 +122,7 @@ class OutputRedirect implements Op {
 
   OutputRedirect(this.dest);
 
+  @override
   Future<Process> runWith(Process other) async {
     if (dest is File || dest is Uri) {
       File file;
@@ -136,10 +150,10 @@ class OutputRedirect implements Op {
           .listen((List<int> data) => list.addAll(data), cancelOnError: true);
     } else if (dest is StreamConsumer<List<int>>) {
       StreamConsumer<List<int>> stream = dest;
-      other.stdout.pipe(stream);
+      await other.stdout.pipe(stream);
     } else if (dest is StreamConsumer<String>) {
       StreamConsumer<String> stream = dest;
-      other.stdout.transform(utf8.decoder).pipe(stream);
+      await other.stdout.transform(utf8.decoder).pipe(stream);
     }
     return other;
   }

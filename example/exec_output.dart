@@ -4,7 +4,7 @@ library example.exec;
 
 import 'package:dscript_exec/dscript_exec.dart';
 
-main() async {
+Future<void> main() async {
   final String out = await exec('cat', ['example/names.csv']).stdout();
   print(out);
 

@@ -36,4 +36,4 @@ abstract class RunnerMixin {
   */
 }
 
-const LineSplitter _splitter = const LineSplitter();
+const LineSplitter _splitter = LineSplitter();
