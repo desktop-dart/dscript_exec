@@ -14,7 +14,7 @@ abstract class RunnerMixin {
     return process.exitCode;
   }
 
-  /*
+/*
   Future<Stream<String>> runGetStringStream(
       {FutureOr onFinish(Stream<String> output)}) async {
     final Process process = await run();

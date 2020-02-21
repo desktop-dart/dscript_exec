@@ -24,14 +24,16 @@ class CompositeCmd extends Object with RunnerMixin implements Command {
 
   @override
   Command operator >(
-      /* File | Uri | StreamConsumer<List<int>> | StreamConsumer<String> | StringBuffer | List<int> */ file) {
+      /* File | Uri | StreamConsumer<List<int>> | StreamConsumer<String> | StringBuffer | List<int> */
+      file) {
     ops.add(OutputRedirect(file));
     return this;
   }
 
   @override
   Command operator <(
-      /* File | Uri | List<int> | Stream<List<int>> | String */ file) {
+      /* File | Uri | List<int> | Stream<List<int>> | String */
+      file) {
     ops.add(InputRedirect(file));
     return this;
   }

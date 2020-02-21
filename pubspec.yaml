@@ -1,9 +1,8 @@
 name: dscript_exec
 description: Bash like command piping and redirecting for Dart to make writing Dart scripts easier.
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/desktop-dart/dscript_exec
 author: Ravi Teja Gudapti <tejainece@gmail.com>
-documentation:
 
 environment:
   sdk: '>=2.1.0 <3.0.0'

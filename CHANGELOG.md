@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
++ Fixed lint errors
+
 ## 1.0.0
 
 + Pipes

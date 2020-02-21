@@ -4,5 +4,5 @@ library example.exec;
 import 'package:dscript_exec/dscript_exec.dart';
 
 Future<void> main() async {
-  await exec('rm', ['example/dest.csv']).run();
+  await exec('cat', ['example/names.csv']).run();
 }

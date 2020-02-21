@@ -20,12 +20,14 @@ class CommandImpl extends Object with RunnerMixin implements Command {
 
   @override
   Command operator >(
-          /* File | Uri | StreamConsumer<List<int>> | StreamConsumer<String> | StringBuffer | List<int> */ src) =>
+          /* File | Uri | StreamConsumer<List<int>> | StreamConsumer<String> | StringBuffer | List<int> */
+          src) =>
       CompositeCmd(this, [OutputRedirect(src)]);
 
   @override
   Command operator <(
-          /* File | Uri | List<int> | Stream<List<int>> | String */ dest) =>
+          /* File | Uri | List<int> | Stream<List<int>> | String */
+          dest) =>
       CompositeCmd(this, [InputRedirect(dest)]);
 
   @override

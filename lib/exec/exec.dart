@@ -1,11 +1,11 @@
 library dscript.exec;
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
-part 'cmd_impl.dart';
 part 'cmd_composite.dart';
+part 'cmd_impl.dart';
 part 'runner_mixin.dart';
 part 'subcmd.dart';
 
@@ -51,7 +51,8 @@ abstract class Command {
   ///       new Uri(path: 'example/dest.csv'))
   ///       .run();
   Command operator >(
-      /* File | Uri | StreamConsumer<List<int>> | StreamConsumer<String> | StringBuffer | List<int> */ dest);
+      /* File | Uri | StreamConsumer<List<int>> | StreamConsumer<String> | StringBuffer | List<int> */
+      dest);
 
   /// Redirects the contents of [src] to the stdin of this command.
   ///
@@ -64,7 +65,8 @@ abstract class Command {
   ///       ''')
   ///       .runGetOutput(onFinish: print);
   Command operator <(
-      /* File | Uri | List<int> | Stream<List<int>> | String */ src);
+      /* File | Uri | List<int> | Stream<List<int>> | String */
+      src);
 
   /// Pipes output of this command to the input of next command
   ///

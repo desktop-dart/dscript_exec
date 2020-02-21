@@ -1,5 +1,6 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:dscript_exec/dscript_exec.dart';
 
 Future<void> main() async {
